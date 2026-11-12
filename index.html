@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍃 森林链接生成器</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+body{background:#b9e4d8;padding:30px 16px;min-height:100vh;}
+.box{max-width:680px;margin:0 auto;background:#ffffffdd;border-radius:24px;padding:30px;box-shadow:0 8px 28px #58a89440;}
+h1{text-align:center;color:#2c7c6b;margin-bottom:26px;font-size:24px;}
+.item{margin-bottom:18px;}
+label{display:block;color:#348c7a;margin-bottom:7px;font-weight:500;}
+input{width:100%;padding:12px 14px;border:2px solid #98d7c7;border-radius:12px;font-size:16px;background:#f0fbf8;color:#225c4f;}
+input:focus{outline:none;border-color:#48b39c;}
+.btn-group{display:flex;gap:10px;margin-top:8px;}
+button{flex:1;padding:12px;border:none;border-radius:12px;background:#58b8a2;color:#fff;font-size:16px;cursor:pointer;transition:0.2s;}
+button:hover{background:#3fa890;}
+.result{margin-top:22px;background:#e6f7f2;padding:16px;border-radius:14px;word-break:break-all;color:#257464;font-weight:500;}
+.preview-title{margin-top:28px;color:#348c7a;margin-bottom:10px;}
+.preview{
+  width:100%;
+  min-height:240px;
+  border-radius:18px;
+  background: url("https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200") center/cover;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+.preview-text{font-size:28px;color:#fff;text-shadow:0 2px 8px #00000060;text-align:center;}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>🍃 森林治愈链接生成器</h1>
+
+<div class="item">
+<label>网址前缀（例如 https://xxx.github.io/）</label>
+<input id="prefix" value="https://你的用户名.github.io/" placeholder="https://xxx.github.io/">
+</div>
+<div class="item">
+<label>后缀路径（斜杠后面，英文数字，不要空格）</label>
+<input id="suffix" value="forest" placeholder="forest">
+</div>
+<div class="item">
+<label>页面展示文字（森林背景上显示的话）</label>
+<input id="msg" value="Take your time" placeholder="写一句温柔的话">
+</div>
+
+<div class="btn-group">
+<button onclick="makeLink()">生成链接</button>
+<button onclick="copyLink()">复制链接</button>
+</div>
+
+<div class="result" id="outLink"></div>
+
+<div class="preview-title">预览效果</div>
+<div class="preview">
+<div class="preview-text" id="preview">Take your time</div>
+</div>
+</div>
+
+<script>
+function makeLink(){
+  const p = document.getElementById('prefix').value.trim();
+  const s = document.getElementById('suffix').value.trim();
+  const text = document.getElementById('msg').value.trim();
+  const url = p + "view.html/" + s + "?text=" + encodeURIComponent(text);
+  document.getElementById('outLink').innerText = url;
+  document.getElementById('preview').innerText = text;
+}
+function copyLink(){
+  const u = document.getElementById('outLink').innerText;
+  if(!u) return alert("请先生成链接！");
+  navigator.clipboard.writeText(u).then(()=>alert("✅ 复制成功"));
+}
+document.getElementById('msg').oninput = function(){
+  document.getElementById('preview').innerText = this.value;
+}
+</script>
+</body>
+</html>
